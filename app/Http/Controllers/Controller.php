@@ -11,6 +11,9 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public $day;
+    public $data;
+
     public function __construct()
     {
         $this->data = collect(
