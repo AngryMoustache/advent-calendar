@@ -23,8 +23,8 @@ class Day1Controller extends Controller
         $result = 0;
         $oldCount = null;
 
-        for ($i = 2; $i < $this->data->count(); $i++) {
-            $count = $this->data->skip($i - 2)->take(3)->sum();
+        for ($i = 0; $i < $this->data->count(); $i++) {
+            $count = $this->data->skip($i)->take(3)->sum();
 
             if ($oldCount && $count > $oldCount) {
                 $result++;
