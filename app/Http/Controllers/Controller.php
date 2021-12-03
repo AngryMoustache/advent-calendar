@@ -23,5 +23,12 @@ class Controller extends BaseController
                 )
             )
         );
+
+        $this->parseData();
+    }
+
+    public function parseData()
+    {
+        //
     }
 }
