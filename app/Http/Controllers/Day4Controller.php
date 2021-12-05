@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Bingo\Board;
+use App\Tools\Bingo\Board;
 
 class Day4Controller extends Controller
 {

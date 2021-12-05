@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Bingo;
+namespace App\Tools\Bingo;
 
 class Board
 {
