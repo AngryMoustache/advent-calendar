@@ -10,7 +10,7 @@ class Day6Controller extends Controller
 
     public function parseData()
     {
-        $this->fish = collect([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+        $this->fish = collect()->pad(9, 0);
         $this->data->each(function ($timer) {
             $this->fish[$timer] += 1;
         });
