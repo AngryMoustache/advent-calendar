@@ -6,38 +6,27 @@ class Day7Controller extends Controller
 {
     public $day = 7;
 
-    public $fuel = 7;
+    public $fuel = 0;
 
     public function first()
     {
-        $this->fuel = [];
-        $max = $this->data->sortDesc()->first();
-        for ($goto = 0; $goto < $max; $goto++) {
-            $this->data->each(function ($number) use ($goto) {
-                $n = $number - $goto;
-                $this->fuel[$goto][] = ($n < 0) ? -$n : $n;
-            });
+        $goto = $this->data->median();
 
-            $this->fuel[$goto] = collect($this->fuel[$goto])->sum();
-        }
+        $this->data->each(function ($from) use ($goto) {
+            $this->fuel += abs($from - $goto);
+        });
 
         return collect($this->fuel)->sort()->first();
     }
 
     public function second()
     {
-        $this->fuel = [];
-        $max = $this->data->sortDesc()->first();
-        for ($to = 0; $to < $max; $to++) {
-            $this->data->each(function ($from) use ($to) {
-                $steps = ($from - $to);
-                $steps = ($steps < 0) ? -$steps : $steps;
+        $goto = $this->data->median();
 
-                $this->fuel[$to][] = ($steps / 2) * ($steps + 1);
-            });
-
-            $this->fuel[$to] = collect($this->fuel[$to])->sum();
-        }
+        $this->data->each(function ($from) use ($goto) {
+            $steps = abs($from - $goto);
+            $this->fuel += ($steps / 2) * ($steps + 1);
+        });
 
         return collect($this->fuel)->sort()->first();
     }
