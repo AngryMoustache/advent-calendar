@@ -14,7 +14,7 @@ class Day7Controller extends Controller
             $this->fuel += abs($from - $goto);
         });
 
-        return collect($this->fuel)->max();
+        return $this->fuel;
     }
 
     public function second()
@@ -26,6 +26,6 @@ class Day7Controller extends Controller
             $this->fuel += ($steps / 2) * ($steps + 1);
         });
 
-        return collect($this->fuel)->max();
+        return $this->fuel;
     }
 }
