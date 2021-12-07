@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 class Day7Controller extends Controller
 {
-    public $day = 7;
-
     public $fuel = 0;
 
     public function first()

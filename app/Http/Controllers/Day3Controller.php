@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 class Day3Controller extends Controller
 {
-    public $day = 3;
-
     public $binaries = [
         'gamma' => [],
         'epsilon' => [],
     ];
 
-    public function parseData()
+    public function data()
     {
         $bits = [];
         for ($i = 0; $i < strlen($this->data->first()); $i++) {

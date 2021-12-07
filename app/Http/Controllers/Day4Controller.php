@@ -6,15 +6,13 @@ use App\Tools\Bingo\Board;
 
 class Day4Controller extends Controller
 {
-    public $day = 4;
-
     public $drawings;
 
     public $boards;
 
     public $winners;
 
-    public function parseData()
+    public function data()
     {
         $this->winners = collect();
         $this->drawings = collect($this->data['drawings']);

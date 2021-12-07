@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 class Day6Controller extends Controller
 {
-    public $day = 6;
-
     public $fish;
 
-    public function parseData()
+    public function data()
     {
         $this->fish = collect()->pad(9, 0);
         $this->data->each(fn ($timer) => $this->fish[$timer] += 1);

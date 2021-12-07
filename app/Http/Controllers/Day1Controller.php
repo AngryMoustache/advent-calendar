@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 class Day1Controller extends Controller
 {
-    public $day = 1;
-
     public function first()
     {
         $result = 0;

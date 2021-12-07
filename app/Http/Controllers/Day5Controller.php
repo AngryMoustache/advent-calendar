@@ -6,9 +6,7 @@ use App\Tools\Coords\Map;
 
 class Day5Controller extends Controller
 {
-    public $day = 5;
-
-    public function parseData()
+    public function data()
     {
         $mapSize = $this->data->flatten()->sortDesc()->first();
         $this->map = new Map($mapSize);

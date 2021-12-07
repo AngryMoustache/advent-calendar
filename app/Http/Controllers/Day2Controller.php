@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 class Day2Controller extends Controller
 {
-    public $day = 2;
-
     public $position = [
         'horizontal' => 0,
         'depth' => 0,
