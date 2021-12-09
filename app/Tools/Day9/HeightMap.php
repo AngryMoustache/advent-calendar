@@ -54,10 +54,9 @@ class HeightMap
         $sweeped ??= collect();
         if (! $sweeped->contains($point) && $point->depth < 9) {
             $sweeped->push($point);
-
-            return $this->surrounding($point)->map(function ($p) use (&$sweeped) {
-                return $this->sweepSurrounding($p, $sweeped);
-            })->filter();
+            return $this->surrounding($point)
+                ->map(fn ($p) => $this->sweepSurrounding($p, $sweeped))
+                ->filter();
         }
 
         return $sweeped;
