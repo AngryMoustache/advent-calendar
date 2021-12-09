@@ -2,8 +2,6 @@
 
 namespace App\Tools\SevenSegment;
 
-use Illuminate\Support\Str;
-
 class Display
 {
     public $mapper = [];

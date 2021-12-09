@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Tools\Day9;
+
+class HeightMap
+{
+    public $coords;
+
+    public function __construct($coords)
+    {
+        $this->coords =  $coords->map(function ($row, $y) {
+            return collect($row)->map(function ($depth, $x) use ($y) {
+                return new Point($x, $y, $depth);
+            });
+        });
+    }
+
+    public function scanLowPoints()
+    {
+        $this->points = collect();
+        $this->coords->each(function ($row) {
+            collect($row)->each(function ($point) {
+                $lowPoints = $this->surrounding($point)->reject(fn ($l) => $l->depth > $point->depth);
+                if ($lowPoints->isEmpty()) {
+                    $this->points->push($point);
+                }
+            });
+        });
+
+        return $this->points;
+    }
+
+    public function scanBasins()
+    {
+        $this->basins = collect();
+        $this->scanLowPoints()->each(function ($point) {
+            $basin = collect();
+            $surrounding = $this->surrounding($point)->reject(fn ($p) => $p->depth === 9);
+            $surrounding->each(fn ($p) => $basin->push($this->sweepSurrounding($p)));
+            $this->basins->push($basin->flatten()->unique());
+        });
+
+        return $this->basins;
+    }
+
+    // Returns the surrounding points
+    private function surrounding($point)
+    {
+        return collect([
+            ($this->coords[$point->y - 1][$point->x] ?? null),
+            ($this->coords[$point->y + 1][$point->x] ?? null),
+            ($this->coords[$point->y][$point->x - 1] ?? null),
+            ($this->coords[$point->y][$point->x + 1] ?? null),
+        ])->filter();
+    }
+
+    // Returns the surrounding points and those surrounding it and ...
+    private function sweepSurrounding($point, &$sweeped = null)
+    {
+        $sweeped ??= collect();
+        if (! $sweeped->contains($point) && $point->depth < 9) {
+            $sweeped->push($point);
+
+            return $this->surrounding($point)->map(function ($p) use (&$sweeped) {
+                return $this->sweepSurrounding($p, $sweeped);
+            })->filter();
+        }
+
+        return $sweeped;
+    }
+}
