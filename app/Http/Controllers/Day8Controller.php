@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Tools\SevenSegment\Display;
+use App\Tools\Day8\Display;
 
 class Day8Controller extends Controller
 {

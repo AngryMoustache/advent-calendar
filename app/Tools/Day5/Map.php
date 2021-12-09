@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tools\Coords;
+namespace App\Tools\Day5;
 
 class Map
 {

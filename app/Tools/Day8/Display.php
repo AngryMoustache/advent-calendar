@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tools\SevenSegment;
+namespace App\Tools\Day8;
 
 class Display
 {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Tools\Coords\Map;
+use App\Tools\Day5\Map;
 
 class Day5Controller extends Controller
 {
