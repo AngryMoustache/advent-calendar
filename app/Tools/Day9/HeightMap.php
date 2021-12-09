@@ -32,15 +32,9 @@ class HeightMap
 
     public function scanBasins()
     {
-        $this->basins = collect();
-        $this->scanLowPoints()->each(function ($point) {
-            $basin = collect();
-            $surrounding = $this->surrounding($point)->reject(fn ($p) => $p->depth === 9);
-            $surrounding->each(fn ($p) => $basin->push($this->sweepSurrounding($p)));
-            $this->basins->push($basin->flatten()->unique());
-        });
-
-        return $this->basins;
+        return $this->scanLowPoints()
+            ->map(fn ($point) => $this->sweepSurrounding($point))
+            ->map(fn ($basin) => $basin->flatten()->unique());
     }
 
     // Returns the surrounding points
