@@ -7,13 +7,20 @@ use Illuminate\Support\Str;
 class Line
 {
     public $string;
-    public $chunks = [];
 
-    public $corrupt = false;
+    public $openers = [
+        '(',
+        '[',
+        '{',
+        '<',
+    ];
 
-    public $openers = ['(', '[', '{', '<'];
-    public $closers = [')', ']', '}', '>'];
-    public $patterns = ['()', '[]', '{}', '<>'];
+    public $patterns = [
+        '()',
+        '[]',
+        '{}',
+        '<>',
+    ];
 
     public $corruptScores = [
         ')' => 3,
