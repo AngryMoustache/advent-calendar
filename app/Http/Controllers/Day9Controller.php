@@ -9,7 +9,6 @@ class Day9Controller extends Controller
     public function data()
     {
         $this->data = new HeightMap($this->data);
-
     }
 
     public function first()
