@@ -13,20 +13,22 @@ class Paper
         $maxX = $this->dots->pluck(0)->max() + 1;
         $maxY = $this->dots->pluck(1)->max() + 1;
 
+        // Make sure these are uneven numbers
+        $maxX += ($maxX % 2 ? 0 : 1);
+        $maxY += ($maxY % 2 ? 0 : 1);
+
         $this->map = collect()->pad($maxY, null)->map(fn () => collect()->pad($maxX, 0));
         $this->dots->each(fn ($coords) => $this->map[$coords[1]][$coords[0]] = 1);
     }
 
-    public function fold($axis)
+    public function fold($axis, $position)
     {
         if ($axis === 'y') {
 
-            $scraps = $this->map->split(2);
-            if ($scraps[0]->count() > $scraps[1]->count()) {
-                $scraps[0]->pop();
-            }
-
-            $scraps[1] = $scraps[1]->reverse()->values();
+            $this->map = $this->merge([
+                $this->map->splice(0, $position),
+                $this->map->reverse()->values(),
+            ]);
 
         } elseif ($axis === 'x') {
 
@@ -42,9 +44,8 @@ class Paper
             });
 
             $scraps[1] = $scraps[1]->map(fn ($col) => $col->reverse()->values());
+            $this->map = $this->merge($scraps);
         }
-
-        $this->map = $this->merge($scraps, $axis);
     }
 
     public function merge($scraps)
