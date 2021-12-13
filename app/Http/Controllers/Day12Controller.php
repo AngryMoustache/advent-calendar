@@ -30,30 +30,33 @@ class Day12Controller extends Controller
 
     public function second()
     {
-        //
+        $this->explore('start', true);
+        return $this->paths->count();
     }
 
-    private function explore($current, $path = null)
+    private function explore($current, $doExtraVisit = false, $path = null)
     {
-        $path ??= collect($current);
+        $path ??= [$current];
 
         // This path has found the exit
         if ($current === 'end') {
-            $this->paths->push(clone $path);
+            $this->paths->push($path);
             return;
         }
 
-        // Don't explore small caves multiple times
-        $connections = $this->caves[$current]['connections']
-            ->reject(function ($connection) use ($path) {
-                return ! $this->caves[$connection]['big'] && $path->contains($connection);
-            });
-
         // Explore further
-        $connections->each(function ($connection) use ($path) {
-            $path = clone $path;
-            $path->push($connection);
-            $this->explore($connection, $path);
+        $this->caves[$current]['connections']->each(function ($connection) use ($path, $doExtraVisit) {
+            if ($this->caves[$connection]['big'] || ! in_array($connection, $path)) {
+                $path[] = $connection;
+                $this->explore($connection, $doExtraVisit, $path);
+            } elseif (
+                ! $this->caves[$connection]['big'] &&
+                ! $this->caves[$connection]['mouth'] &&
+                $doExtraVisit
+            ) {
+                $path[] = $connection;
+                $this->explore($connection, ! $doExtraVisit, $path);
+            }
         });
     }
 }
