@@ -25,7 +25,7 @@ class Day14Controller extends Controller
 
     public function first()
     {
-        return $this->insertions(10);
+        return $this->insertions(4);
     }
 
     public function second()
@@ -35,15 +35,14 @@ class Day14Controller extends Controller
 
     public function insertions($loop)
     {
-        $pairs = [];
-
         for ($i = 0; $i < $loop; $i++) {
+            $pairs = [];
             $finalPair = null;
 
             foreach ($this->pairs as $pattern => $amount) {
                 if (isset($this->insertions->{$pattern})) {
                     $element = $this->insertions->{$pattern};
-go fuck yourself 14
+
                     $pair = $pattern[0] . $element;
                     $pairs[$pair] ??= 0;
                     $pairs[$pair] += $amount;
@@ -55,6 +54,7 @@ go fuck yourself 14
                     if (! $finalPair && $pattern === $this->finalPair) {
                         $finalPair = $pair;
                     }
+
                 } else {
                     dd('F');
                     $pairs[$pattern] ??= 0;
@@ -66,13 +66,13 @@ go fuck yourself 14
             $this->finalPair = $finalPair;
         }
 
-        dump($this->pairs);
 
         // Count occurrences
         $counts = [];
         foreach ($this->pairs as $pair => $amount) {
             $counts[$pair[0]] ??= 0;
             $counts[$pair[0]] += $amount;
+
             if ($pair === $this->finalPair) {
                 $counts[$pair[1]] ??= 0;
                 $counts[$pair[1]] += $amount;
