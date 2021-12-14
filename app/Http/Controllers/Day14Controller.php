@@ -8,8 +8,6 @@ class Day14Controller extends Controller
     public $finalPair = null;
     public $insertions;
 
-    public $example = true;
-
     public function data()
     {
         $this->insertions = $this->data['insertions'];
@@ -25,7 +23,7 @@ class Day14Controller extends Controller
 
     public function first()
     {
-        return $this->insertions(4);
+        return $this->insertions(10);
     }
 
     public function second()
@@ -40,25 +38,18 @@ class Day14Controller extends Controller
             $finalPair = null;
 
             foreach ($this->pairs as $pattern => $amount) {
-                if (isset($this->insertions->{$pattern})) {
-                    $element = $this->insertions->{$pattern};
+                $element = $this->insertions->{$pattern};
 
-                    $pair = $pattern[0] . $element;
-                    $pairs[$pair] ??= 0;
-                    $pairs[$pair] += $amount;
+                $pair = $pattern[0] . $element;
+                $pairs[$pair] ??= 0;
+                $pairs[$pair] += $amount;
 
-                    $pair = $element . $pattern[1];
-                    $pairs[$pair] ??= 0;
-                    $pairs[$pair] += $amount;
+                $pair = $element . $pattern[1];
+                $pairs[$pair] ??= 0;
+                $pairs[$pair] += $amount;
 
-                    if (! $finalPair && $pattern === $this->finalPair) {
-                        $finalPair = $pair;
-                    }
-
-                } else {
-                    dd('F');
-                    $pairs[$pattern] ??= 0;
-                    $pairs[$pattern] += $amount;
+                if (! $finalPair && $pattern === $this->finalPair) {
+                    $finalPair = $pair;
                 }
             }
 
@@ -75,12 +66,10 @@ class Day14Controller extends Controller
 
             if ($pair === $this->finalPair) {
                 $counts[$pair[1]] ??= 0;
-                $counts[$pair[1]] += $amount;
+                $counts[$pair[1]] += 1;
             }
         }
 
-        dump($counts);
-        dump(collect($counts)->sum());
         return max($counts) - min($counts);
     }
 }
