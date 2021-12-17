@@ -15,7 +15,7 @@ class Day17Controller extends Controller
     {
         $this->probes = collect();
         for ($x = 0; $x < $this->checkX; $x++) {
-            for ($y = -$this->checkY; $y < -$this->checkY; $y++) {
+            for ($y = -$this->checkY; $y < $this->checkY; $y++) {
                 $this->probe($x, $y);
             }
         }
